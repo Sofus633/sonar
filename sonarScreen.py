@@ -72,12 +72,13 @@ def retrive_arr_pts(arduino):
 def trace_lines(points, origin):
     origin = [origin[0]* ZOOM, origin[1] * ZOOM]
     for i in range(len(points)):
-        dest = ((origin[0] + points[i][0])*ZOOM, (origin[1] + points[i][1])*ZOOM)
+        dest = ((origin[0] + points[i][0]) * ZOOM, (origin[1] + points[i][1]) * ZOOM)
         pygame.draw.line(screen, (255, 0, 0), origin ,dest)
 
 def trace_inter_lines(points, origin):
     points_l = len(points)
-    for i in range(0, len(points)):
+    origin = [origin[0]* ZOOM, origin[1] * ZOOM]
+    for i in range(len(points)):
          if (i + 1 < points_l):
             p1 = ((origin[0] + points[i][0]) * ZOOM, (origin[1] + points[i][1]) * ZOOM)
             p2 = ((origin[0] + points[i+1][0]) * ZOOM, (origin[1] + points[i+1][1]) * ZOOM)
@@ -95,8 +96,8 @@ def add_dic(elem, dic, tab):
     else:
         dic[elem[1]] = elem[0]
         tab.append(elem[0])
-arduino = serial.Serial(port='/dev/ttyACM0', baudrate=9600, timeout=1)
-time.sleep(2)
+#arduino = serial.Serial(port='/dev/ttyACM0', baudrate=9600, timeout=1)
+#time.sleep(2)
 
 key_bindings = {
     pygame.K_t : zoom_up,
@@ -108,7 +109,7 @@ key_bindings = {
     pygame.K_r : act_screen
 }
 origin = (SCREEN_SIZE[0]/2, SCREEN_SIZE[1]/2)
-points = []
+points = random_test()
 points_dic = {}
 #for angle in range(0, 180, 1):
 #    print(angle)
@@ -120,11 +121,11 @@ points_dic = {}
 #trace_inter_lines(points, origin)
 #pygame.display.flip()
 
-retrive_arr_pts(arduino)
+#retrive_arr_pts(arduino)
 #main loop
 running = True
 while running:
-    add_dic(retrive_arr_pts(arduino), points_dic, points)
+    #add_dic(retrive_arr_pts(arduino), points_dic, points)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
